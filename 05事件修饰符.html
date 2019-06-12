@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <style>
+        .box1{
+            width: 150px;
+            height: 150px;
+            background-color: aquamarine;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background-color: greenyellow;
+        }
+    </style>
+    <title>事件修饰符</title>
+</head>
+<body>
+    <div id="app">
+        <p>.stop 阻止事件默认行为(事件冒泡)</p>
+        <div class="box1" @click="divClick">
+            <!-- .stop 阻止事件默认行为(事件冒泡) -->
+            <input type="button" value="按钮1" @click.stop="btnClick">
+        </div>
+        <hr>
+        <!-- .prevent 阻止事件默认行为 -->
+        <p>.prevent 阻止事件默认行为</p>
+        <a href="http://www.baidu.com" @click.prevent="linkClick">百度一下</a>
+        <hr>
+        <!-- .capture 捕获机制 -->
+        <p>.capture 捕获机制</p>
+        <div class="box1" @click.capture="divClick">
+            <input type="button" value="按钮1" @click="btnClick">
+        </div>
+        <hr>
+        <!-- .self 自身触发 -->
+        <p>.self 自身触发</p>
+        <div class="box1" @click.self="divClick">
+            <input type="button" value="按钮1" @click="btnClick">
+        </div>
+        <hr>
+        <a href="http://www.baidu.com" @click.prevent.once="linkClick">百度一下</a>
+        <hr>
+        <p>.stop 和 .self的区别</p>
+        <p>.self 只阻止自己身上的冒泡行为的触发，并不会真正阻止冒泡行为</p>
+        <div class="box1" @click="divClick">
+            <div class="box2" @click="box2Click">
+                <input type="button" value="按钮1" @click.self="btnClick">
+            </div>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:"hello vue.js"
+            },
+            methods:{
+                divClick(){
+                    alert("div click event")
+                },
+                btnClick(){
+                    alert("button click event")
+                },
+                linkClick(){
+                    alert("a tag's click event")
+                },
+                box2Click(){
+                    alert("box2 click event")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

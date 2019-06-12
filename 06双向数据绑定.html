@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v基本代码</title>
+</head>
+<body>
+    <div id="app">
+        <div>
+            name:<input type="text" v-model="name">
+            <span v-show="name">{{name}}</span>
+        </div>
+        <div>
+            age:<input type="text" v-model="age">
+            <span v-show="age">{{age}}</span>
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                name:null,
+                age:null
+            }
+        })
+    </script>
+</body>
+</html>

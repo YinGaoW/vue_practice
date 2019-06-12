@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>过滤器</title>
+</head>
+<body>
+    <!-- 可以放置多个过滤器 -->
+    <div id="app">{{msg | myFilter('WYG','wyg') | upperCase}}
+        <hr>
+        <p>{{msg2 | lowerCase}}</p>
+    </div>
+    <script>
+        // 全局过滤器
+        Vue.filter('myFilter',function(msg, arg1,arg2){
+            // replace 函数第一个参数可以接受正则
+            return msg.replace(/hello/g,arg1+arg2);
+        })
+        Vue.filter('upperCase',function(msg){
+            return msg.toUpperCase();
+        })
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js,hello,fhf",
+                msg2:"WYG FHF"
+            },
+            // 过滤器调用采用就近原则，优先调用私有过滤器
+            filters:{
+                lowerCase(msg){
+                    return msg.toLowerCase();
+                }
+            }
+        })
+    </script>
+</body>
+</html>

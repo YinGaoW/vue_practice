@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <style>
+        marquee{
+            color: rgb(51, 197, 216);
+            font-size: 50px;
+        }
+        h3{
+            color: rgb(51, 197, 216);
+            font-size: 35px;
+        }
+    </style>
+    <title>跑马灯效果</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="button" value="开始" @click="start">
+        <input type="button" value="停止" @click="stop">
+        <h3>{{msg}}</h3>
+
+        <!-- h5 提供的标签 -->
+        <marquee>{{msg}}</marquee>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', // 要控制的区域
+            data:{
+                msg:"范厚凤，我要回来找你啦!!!oh,yeah!",
+                intervalId:null
+            },
+            methods:{
+                start(){
+                    if(null != this.intervalId)return;
+                    // es6 语法 ，箭头函数，内部的this和外部的this指向同一实例
+                    this.intervalId = setInterval( () => {
+                        var start = this.msg.substring(0,1);
+                        var end = this.msg.substring(1);
+                        this.msg = end+start;
+                    },400);
+                },
+                stop(){
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

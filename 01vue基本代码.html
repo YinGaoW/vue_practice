@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v基本代码</title>
+</head>
+<body>
+    <!-- 将来new 的vue实例，控制此元素中的内容 -->
+    <div id="app">{{msg}}</div>
+    <script>
+        // 创建vue实例
+        // 导入vue.js，在浏览器内存中多了一个Vue构造函数
+        var vm = new Vue({
+            el:'#app', // 要控制的区域
+            data:{
+                msg:"hello vue.js"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <style>
+    .red{
+        color: red;
+    }
+    .thin{
+        font-weight: 200px;
+    }
+    .italic{
+        font-style: italic;
+    }
+    .active{
+        letter-spacing: 0.5em;
+    }
+    </style>
+    <title>属性绑定元素设置class</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 第一种使用方式，直接传递数组 -->
+        <h1 :class="['red','active']">这是一个h1标签</h1>
+
+        <hr>
+        <!-- 使用三目运算符的方式 -->
+        <h1 :class="['red','active',flag?'italic':'']">这是第二个h1标签</h1>
+        <hr>
+        <!-- 以对象的形式 -->
+        <h1 :class="['red','active',{'italic':flag}]">这是第三个h1标签</h1>
+        <hr>
+        <!-- 直接传递一个对象 -->
+        <h1 :class="{red:true,thin:true,italic:true,active:true}">这是第四个h1标签</h1>
+        <h1 :class="classObj">这是第四个h1标签</h1>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                flag:true,
+                classObj:{red:true,thin:true,italic:true,active:true}
+            }
+        })
+    </script>
+</body>
+</html>

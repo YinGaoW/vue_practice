@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v-for遍历普通数组</title>
+</head>
+<body>
+    <div id="app">
+        <p>数组遍历：(item,i) in list</p>
+        <p v-for="(item,i) in list">index:{{i}}-->value:{{item}}</p>
+        <hr>
+        <p>对象数组遍历：elem in users</p>
+        <p v-for="elem in users">id:{{elem.id}}, name:{{elem.name}}, age:{{elem.age}}, sex:{{elem.sex}}</p>
+        <hr>
+        <p>遍历对象:(val,key,index) in user</p>
+        <p v-for="(val,key,index) in user">val:{{val}}, key:{{key}},index:{{index}}</p>
+        <hr>
+        <p>遍历数字:(count,i) in 8</p>
+        <p v-for="(count,i) in 8">value:{{count}},index:{{i}}</p>
+        <hr>
+        <p>v-for循环key属性的使用：</p>
+        <div>
+            <label>id:
+                <input v-model="id"> 
+            </label>
+            <label>name:
+                <input v-model="name"> 
+            </label>
+            <input type="button" @click="add" value="添加">
+        </div>
+        <!-- 在组件中使用v-for遍历的时候，或在一些特殊情况中，如果v-for有问题，
+        必须在使用v-for的同时，指定唯一的字符串或数字类型的 :key -->
+        <p v-for="elem in people" :key="elem.id">
+            <input type="checkbox">
+            {{elem.id}}---{{elem.name}}
+        </p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                id:null,
+                name:null,
+                list:[1,2,3,4,5,6],
+                users:[
+                    {id:123,name:"wyg",age:23,sex:"male"},
+                    {id:234,name:"fhf",age:23,sex:"female"}
+                ],
+                user:{id:5678,name:"love",age:8888},
+                people:[
+                    {id:1,name:"WYG"},
+                    {id:2,name:"FHF"}
+                ]
+            },
+            methods:{
+                add(){
+                    this.people.unshift({id:this.id,name:this.name});
+                }
+            }
+        })
+    </script>
+</body>
+</html>

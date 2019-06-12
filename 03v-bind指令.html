@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v-bind、v-on指令</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-bind: 指令用来绑定属性，简写为  : -->
+        <input type="button" value="按钮1" v-bind:title="myTitle" v-on:click="show">
+        <!-- v-bind: 简写形式 -->
+        <input type="button" value="按钮2" :title="myTitle + '123'" @click="show">
+    </div>
+    <script>
+        // 创建vue实例
+        // 导入vue.js，在浏览器内存中多了一个Vue构造函数
+        var vm = new Vue({
+            el:'#app', // 要控制的区域
+            data:{
+                myTitle:"这是自定义title"
+            },
+            methods:{
+                show:function(){
+                    alert("hello clicks")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v基本代码</title>
+</head>
+<body>
+    <div id="app">{{msg}}
+        <p>{{2+5}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            }
+        })
+    </script>
+</body>
+</html>

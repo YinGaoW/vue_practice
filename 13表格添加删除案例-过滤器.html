@@ -83,29 +83,36 @@
             let date = new  Date(dateStr);
             let y = date.getFullYear();
             let m = date.getMonth()+1;
-            if(m<10)
-            m = '0' + m;
+            // if(m<10)
+            // m = '0' + m;
+            // es6 新方法  padStart 从首部填充，padEnd  从尾部填充
+            m = m.toString().padStart(2,'0'); // 第一个参数指明填充 后占几位，第二个参数表名用什么填充
             let d = date.getDate();
-            if(d<10)
-            d = '0' + d;
+            // if(d<10)
+            // d = '0' + d;
+            d = d.toString().padStart(2,'0');
             if(format.toLowerCase() === 'yyyy-mm-dd'){
                 return `${y}-${m}-${d}`;
             }
             let h = date.getHours();
-            if(h<10)
-            h = '0' + h;
+            // if(h<10)
+            // h = '0' + h;
+            h = h.toString().padStart(2,'0');
             let min = date.getMinutes();
-            if(min<10)
-            min = '0' + min;
+            // if(min<10)
+            // min = '0' + min;
+            min = min.toString().padStart(2,'0');
             let s = date.getSeconds();
-            if(s<10)
-            s = '0' + s;
+            // if(s<10)
+            // s = '0' + s;
+            s = s.toString().padStart(2,'0');
             return `${y}-${m}-${d} ${h}:${min}:${s}`;
 
         })
         // 全局过滤器定义语法
         // Vue.filter('过滤器名称'，function(){})
         // 其中function的第一个参数固定，为管道符前面传过来的数据
+        // 所有Vue 实例共享
         Vue.filter('nameFilter',function(name){
             return name+"123";
         })

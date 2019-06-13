@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <script src="./lib/jquery-3.3.1.js"></script>
+    <title>生命周期函数</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="按钮" @click="btnClick">
+        <p id="p1">{{msg}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            methods:{
+                show(){
+                    console.log("执行了show方法");
+                },
+                btnClick(){
+                    this.msg = "更改过后的内容"
+                }
+            },
+            beforeCreate(){ // 第一个生命周期函数，Vue 实例被完全创建出来之前会执行它
+                // console.log("beforeCreate:" + this.msg);
+                // this.show();
+                // 在beforeCreate 生命周期函数执行的时候，data 和 methods 中的数据还未初始化
+            },
+            created(){ // 第二个生命周期函数
+                // console.log("created:"+this.msg);
+                // this.show();
+                // 在created 中，data 和 methods 已经被初始化好了
+            },
+            beforeMount(){ // 第三个生命周期函数，表示模板已经在内存中编译完成，但还未渲染到页面上
+                // let text = document.getElementById("p1").innerHTML;
+                // console.log(text); // 会输出 {{msg}}
+                // 在beforeMount 执行的时候，页面中的元素还未被真正的替换过来，只是之前写的模板字符串
+            },
+            mounted(){ // 第四个生命周期函数，内存中的模板已经挂载在浏览器页面中,Vue实例从创建阶段进入运行阶段
+                // console.log("mounted:"+this.msg);
+                // console.log(document.getElementById("p1").innerHTML);
+                
+            },
+            beforeUpdate(){
+                // 此时页面数据是旧数据，而data中的是最新的数据，页面数据尚未和data中的最新数据同步
+                // console.log("beforeUpdated");
+                // console.log("界面内容："+document.getElementById("p1").innerHTML);
+                // console.log("data中的数据："+this.msg);
+                
+            },
+            updated(){
+                // 页面数据和data中的数据已经同步，都是最新的数据
+                // console.log("updated");
+                // console.log("界面内容："+document.getElementById("p1").innerHTML);
+                // console.log("data中的数据："+this.msg);
+            },
+            beforeDestroy(){ // Vue 实例从运行阶段进入销毁阶段，还没有真正执行销毁过程，data,methods等都还可用
+
+            },
+            destroyed(){
+
+            }
+        })
+        
+    </script>
+</body>
+</html>

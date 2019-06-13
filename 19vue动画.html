@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <script src="./lib/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="./lib/animate.css">
+    <title>vue动画</title>
+    <style>
+        /* .v-enter,.v-leave-to{
+            opacity: 0;
+            transform: translateX(180px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition: all .6s ease;
+            opacity: .5;
+        }
+
+        .my-enter,.my-leave-to{
+            opacity: 0;
+            transform: translateY(80px)
+        }
+        .my-enter-active,.my-leave-active{
+            transition: all .6s ease;
+            opacity: .5;
+        } */
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" @click="toggle" value="显示/隐藏">
+        <!-- transition 由vue 官方提供 -->
+        <transition>
+            <h2 v-show="flag">这是h2标题</h2>
+        </transition>
+        <hr>
+        <input type="button" @click="flag2=!flag2" value="显示/隐藏">
+        <!-- name 属性区分不同组的动画 -->
+        <transition name="my">
+            <h1 v-show="flag2">这是h1标题</h2>
+        </transition>
+        <hr>
+        <p>使用animate.css</p>
+        <!-- <input type="button" @click="flag3=!flag3" value="显示/隐藏">
+        <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut" :duration="400">
+            <h3 v-show="flag3">这是用animate.css实现的动画</h3>
+        </transition> -->
+        <input type="button" @click="flag3=!flag3" value="显示/隐藏">
+        <!-- 传入:duration  的对象控制入场和出场的时长-->
+        <transition enter-active-class="animated bounceIn" leave-active-class="animated bounceOut" :duration="{enter:200,leave:1400}">
+            <h3 v-show="flag3">这是用animate.css实现的动画</h3>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js",
+                flag:false,
+                flag2:false,
+                flag3:false
+            },
+            methods:{
+                toggle(){
+                    this.flag = !this.flag
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>v基本代码</title>
+    <style>
+        li{
+            border: 1px dashed #999999;
+            margin: 5px;
+            line-height: 35px;
+            padding-left: 5px;
+            font-size: 12px;
+            width: 100%
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(90px)
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.6s ease
+        }
+        li:hover{
+            background-color: yellow;
+            transition: all 1.4s ease
+        }
+        /* 下面的v-move 和 v-leave-active 控制元素渐渐飘上来 */
+        .v-move{
+            transition: all 0.6s ease
+        }
+        .v-leave-active{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <label>
+            id:
+            <input type="text" v-model="id">
+        </label>
+        <label>
+            name:
+            <input type="text" v-model="name">
+        </label>
+        <input type="button" @click="add" value="添加">
+        <ul>
+            <!-- 实现列表过度的时候，如果是通过v-for渲染出来的，不能使用<transition>包裹，需要使用<transition-grout> -->
+            <!-- appear属性实现页面刚展示出来入场效果 -->
+            <transition-group appear>
+                <li v-for="(item,i) in list" :key="item.id" @click="del(i)">{{item.id}} --> {{item.name}}</li>
+            </transition-group>
+        </ul>
+        <hr>
+        <!-- 此方式不会在ul内部添加<span>标签 -->
+        <transition-group appear tag="ul">
+                <li v-for="(item,i) in list" :key="item.id" @click="del(i)">{{item.id}} --> {{item.name}}</li>
+        </transition-group>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js",
+                list:[
+                    {id:1,name:"宝马"},
+                    {id:2,name:"奔驰"},
+                    {id:3,name:"奥迪"},
+                    {id:4,name:"起亚"},
+                    {id:5,name:"兰博基尼"}
+                ],
+                id:null,
+                name:null
+            },
+            methods:{
+                add(){
+                    this.list.unshift({id:this.id,name:this.name});
+                    this.id = this.name = null
+                },
+                del(i){
+                    this.list.splice(i,1);
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

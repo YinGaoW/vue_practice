@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="lib/Vue.js"></script>
-    <title>v基本代码</title>
+    <title>客户端JSONP页面</title>
 </head>
 <body>
-    <div id="app">
-    </div>
     <script>
-        var vm = new Vue({
-            el:'#app', 
-            data:{
-                msg:"hello vue.js"
-            }
-        })
+        function showInfo(data){
+            console.log("show 方法被执行");
+            console.log(data);
+            
+        }
     </script>
+    <script src="http://127.0.0.1:3000/getScript?callback=showInfo"></script>
 </body>
 </html>

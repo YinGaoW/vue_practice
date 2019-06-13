@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <!-- vue-resource 依赖于 vue.js -->
+    <script src="./lib/vue-resource.js"></script>
+    <title>v基本代码</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="get请求" @click="getInfo">
+        <p>{{msg}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            methods:{
+                getInfo(){
+                    this.$http.get('./00test.json').then(res => {
+                        this.msg = res.body
+                    },()=>{
+                        alert("请求失败")
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

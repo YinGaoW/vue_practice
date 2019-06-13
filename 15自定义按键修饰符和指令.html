@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <script src="./lib/jquery-3.3.1.js"></script>
+    <script src="./lib/bootstrap.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.css">
+    <title>15自定义按键修饰符</title>
+</head>
+<body>
+    <div id="app">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Id:
+                    <input type="text" class="form-control" v-model="id">
+                </label>
+                <label>
+                    Name:
+                    <!-- keyup.enter 针对enter键起作用 -->
+                    <input type="text" class="form-control" v-model="name" @keyup.f2="add"> 
+                </label>
+                <input type="button" class="btn btn-primary" value="添加" @click="add">
+                <label>
+                    Search:
+                    <!-- v-focus 为自定义指令 -->
+                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'red'">
+                </label>
+            </div>
+        </div>
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>CreateTime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td v-text="item.id"></td>
+                    <td v-text="item.name"></td>
+                    <!-- <td v-text="item.createTime"></td> -->
+                    <td>{{ item.createTime | format }}</td>
+                    <td><a href="" @click.prevent="del(item.id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="app2">
+        <h3 v-color="'red'" v-fontsize="'100px'" v-fontstyle="'italic'">{{dt | format('')}}</h3>
+    </div>
+    <script>
+        /*var format = function(date,format){
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            if(month<10)
+                month = '0' + month;
+            var day = date.getDate();
+            if(day<10)
+                day = "0" + date;
+            var hour = date.getHours();
+            if(hour<10)
+                hour = "0" + hour;
+            var min = date.getMinutes();
+            if(min<10)
+                min = "0" + min;
+            var sec = date.getSeconds();
+            if(sec<10)
+                sec = "0" + sec;
+            switch(format){
+                case "yyyy-MM-dd":
+                    return year + "-" + month + "-" + day;
+                case "yyyy-MM-dd hh:mm:ss":
+                    return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+            }
+
+        }*/
+        // 形参format 带有默认值 ''
+        Vue.filter('format',(dateStr,format='') => {
+            let date = new  Date(dateStr);
+            let y = date.getFullYear();
+            let m = date.getMonth()+1;
+            // if(m<10)
+            // m = '0' + m;
+            // es6 新方法  padStart 从首部填充，padEnd  从尾部填充
+            m = m.toString().padStart(2,'0'); // 第一个参数指明填充 后占几位，第二个参数表名用什么填充
+            let d = date.getDate();
+            // if(d<10)
+            // d = '0' + d;
+            d = d.toString().padStart(2,'0');
+            if(format.toLowerCase() === 'yyyy-mm-dd'){
+                return `${y}-${m}-${d}`;
+            }
+            let h = date.getHours();
+            // if(h<10)
+            // h = '0' + h;
+            h = h.toString().padStart(2,'0');
+            let min = date.getMinutes();
+            // if(min<10)
+            // min = '0' + min;
+            min = min.toString().padStart(2,'0');
+            let s = date.getSeconds();
+            // if(s<10)
+            // s = '0' + s;
+            s = s.toString().padStart(2,'0');
+            return `${y}-${m}-${d} ${h}:${min}:${s}`;
+
+        })
+        // 全局过滤器定义语法
+        // Vue.filter('过滤器名称'，function(){})
+        // 其中function的第一个参数固定，为管道符前面传过来的数据
+        // 所有Vue 实例共享
+        Vue.filter('nameFilter',function(name){
+            return name+"123";
+        })
+
+        // 自定义全局按键修饰符
+        Vue.config.keyCodes.f2=113;
+
+        // 使用Vue.directive() 定义全局指令
+        // 其中： 参数1：指令名称，且指令名称不需要加 v-, 但在调用的时候要加v-
+        // 参数2 是一个对象，对象身上有一些相关的函数，这些函数可在特定阶段执行相关操作
+        Vue.directive('focus',{
+            // 每当指令绑定到元素上的时候，执行这个函数，只执行一次
+            bind:function(el){
+                // 在每个函数中，第一个参数永远是el,表示被绑定的元素，是一个原生的js对象，即标签元素在浏览器内存中对应的对象
+                // 在元素刚绑定指令的时候，还没插入到DOM中去，此时调用focus没有作用，
+                // 需元素插入DOM后才会获取焦点
+                //el.focus();
+            },
+            
+            // 元素插入到DOM中的时候会执行该函数，只执行一次
+            inserted:function(el){
+                el.focus();
+            },
+
+            // VNode 更新的时候会执行update,可能会触发多次
+            updated:function(){}
+        })
+
+        Vue.directive('color',{
+            bind:function(el, binding){
+                el.style.color = binding.value;
+            }
+        })
+        // 如果只在bind  和 update 上做动作，可以这样简写
+        /*Vue.directive('fontstyle',function(el,binding){
+            el.style.fontStyle = binding.value;
+        })*/
+        
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                list:[
+                    {id:1,name:"宝马",createTime:"2018-12-11 12:02:34"},
+                    {id:2,name:"奔驰",createTime:"2017-11-11 01:34:32"},
+                    {id:3,name:"奥迪",createTime:"2016-02-11 04:05:15"},
+                    {id:4,name:"起亚",createTime:"2018-05-11 11:33:56"},
+                    {id:5,name:"兰博基尼",createTime:"2019-12-11 07:13:51"}
+                ],
+                id:null,
+                name:null,
+                keywords:null,
+            },
+            methods:{
+                del(id){
+                    // 在some方法中return true会立即终止循环
+                    this.list.some((item,i) => {
+                        if(item.id === id){
+                            this.list.splice(i,1);
+                            return true;
+                        }
+                    })
+                    // findIndex函数用于查找索引
+                    // let i = this.list.findIndex((item) => {
+                    //     if(item.id === id)
+                    //         return true;
+                    // })
+                    // alert(i)
+                },
+                add(){
+                    this.list.unshift({id:this.id,name:this.name,createTime:new Date()});
+                    this.id = this.name = null;
+                },
+                search(keywords){
+                    if(null == keywords || ""==keywords)
+                        return this.list;
+                    let newList = new Array();
+                    keywords = keywords.trim();
+                    /*this.list.forEach(item => {
+                        if(item.name.indexOf(keywords) != -1){
+                            newList.push(item);
+                        }
+                    })*/
+                    return this.list.filter(item => {
+                        if(item.name.includes(keywords))
+                            return item;
+                    })
+                    
+                }
+            }
+        })
+
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{
+                dt:new Date()
+            },
+            directives:{// 自定义私有指令
+                'fontsize':{
+                    bind: function(el, binding){
+                        el.style.fontSize = binding.value
+                    }
+                },
+                'fontstyle':function(el,binding){ // 等同于写到了 bind 和 update
+                    el.style.fontStyle = binding.value;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

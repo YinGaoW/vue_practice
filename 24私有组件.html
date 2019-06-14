@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>24私有组件</title>
+</head>
+<body>
+    <div id="app">
+        <login></login>
+    </div>
+    <div id="app2">
+    </div>
+    <template id="private">
+        <h1 style="color: red">私有组件</h1>
+    </template>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            components:{ // 定义实例内部私有组件
+                login:{
+                    template:"#private"
+                }
+            }
+        })
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{
+
+            },
+            components:{
+
+            }
+        })
+    </script>
+</body>
+</html>

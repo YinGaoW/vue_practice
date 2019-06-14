@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>父组件传递方法给子组件</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 事件绑定机制，传递方法，用v-on 绑定，方法不带括号 -->
+        <com1 @func="show"></com1>
+    </div>
+    <template id="tmp1">
+        <div>
+            <h1>这是子组件</h1>
+            <input type="button" value="子组件按钮，点击触发父组件传递来的方法" @click="myfunc">
+        </div>
+    </template>
+    <script>
+        // 定义一个字面量类型的模板对象
+        var com1 = {
+            template:'#tmp1',
+            data(){
+                return {
+                    sonmsg:{name:"wyg",sex:"male"}
+                }
+            },
+            methods:{
+                myfunc(){
+                    // 第2个位置开始是方法的参数列表，通过此方式可以向父组件传值
+                    this.$emit('func',this.sonmsg)
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js",
+                parentmsg:null
+            },
+            methods:{
+                show(arg1){
+                    console.log("调用了父组件的show方法  "+JSON.stringify(arg1));
+                    console.log(arg1);
+                    this.parentmsg = arg1
+                    console.log("赋值结束");
+                    
+                }
+            },
+            components:{
+                // com1 // 解释为 com1: com1
+                com1:com1,
+                
+            }
+        })
+    </script>
+</body>
+</html>

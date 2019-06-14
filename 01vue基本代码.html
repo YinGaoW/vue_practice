@@ -9,7 +9,9 @@
 </head>
 <body>
     <!-- 将来new 的vue实例，控制此元素中的内容 -->
-    <div id="app">{{msg}}</div>
+    <div id="app">{{msg}}
+        <p v-color="'red'">哈哈</p>
+    </div>
     <script>
         // 创建vue实例
         // 导入vue.js，在浏览器内存中多了一个Vue构造函数
@@ -17,6 +19,13 @@
             el:'#app', // 要控制的区域
             data:{
                 msg:"hello vue.js"
+            },
+            directives:{
+                'color':{
+                    bind:function(el,binding){
+                        el.style.color = binding.value
+                    }
+                }
             }
         })
     </script>

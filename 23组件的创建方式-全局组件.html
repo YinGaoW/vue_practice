@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>组件的创建方式</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 用Vue.componet定义全局组件的时候 -->
+        <!-- 如果组件名称使用驼峰命名，则标签单词间用 - 连接。 -->
+        <!-- 如果组件名称没有用驼峰，则不需要 - 连接。 -->
+        <p>组件的创建方式1</p>
+        <my-com1></my-com1>
+        <hr>
+        <p>组件的创建方式2</p>
+        <mycom2></mycom2>
+        <hr>
+        <p>组件的创建方式3</p>
+        <mycom3></mycom3>
+    </div>
+    <!-- 在#app 外面使用template标签定义组件的模板结构 -->
+    <template id="tmp1">
+        <div>
+            <h1>通过template元素，外部定义组件，有代码提示</h1>
+        </div>
+    </template>
+    <script>
+        // 方式1
+        // 1.1  使用Vue.extend
+        var com1 = Vue.extend({
+            template:'<h3>这是使用Vue.extend创建出来的组件</h3>'
+        })
+        // 1.2  使用Vue.component('组件名称',创建出来的组件模板对象)
+        Vue.component('myCom1',com1)
+
+        // 方式2
+        // 2.1
+        // 不论以哪种方式创建出来的组件，只能有一个根标签
+        Vue.component('mycom2',{
+            template:'<h3>这是使用简化方式创建出来的组件</h3>'
+        })
+
+        // 方式3
+        // 3.1
+        Vue.component('mycom3',{
+            template:'#tmp1'
+        })
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>ref获取dom元素和组件</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="获取元素" @click="getElement" ref="btn">
+        <h3 id="myh3" ref="myh3">这是一个h1标题</h3>
+        <myh1 ref="myh1"></myh1>
+    </div>
+    <script>
+        var myh1 = {
+            template:'<h1>组件的h1标签</h1>',
+            data(){
+                return {
+                    sonmsg:"som msg"
+                }
+            },
+            methods:{
+                show(){
+                    alert("组件的show方法被调用")
+                }
+            }
+        }
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            methods:{
+                getElement(){
+                    // alert(this.$refs.myh3.innerText)
+                    // alert(this.$refs.btn.value)
+                    alert(this.$refs.myh1.sonmsg)
+                    this.$refs.myh1.show()
+                }
+
+            },
+            components:{
+                myh1
+            }
+
+        })
+    </script>
+</body>
+</html>

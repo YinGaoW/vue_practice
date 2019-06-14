@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>复习，实现小球动画</title>
+    <style>
+    .ball{
+        width: 30px;
+        height: 30px;
+        background-color: aqua;
+        border-radius: 50%
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" @click="flag=!flag" value="按钮">
+        <transition
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                flag:false
+            },
+            methods:{
+                beforeEnter(el){
+                    el.style.transform = 'translate(0,0)'
+                },
+                enter(el,done){
+                    el.offsetWidth
+                    el.style.transform = 'translate(250px,450px)'
+                    el.style.transition = 'all 2s ease'
+                    done()
+                },
+                afterEnter(el){
+                    // 这句话第一个功能控制小球的显示和隐藏
+                    // 第二个功能直接跳过下半场动画
+                    this.flag = !this.flag
+                    // el.style.opacity = 0
+
+                    // Vue 把一个完整动画使用钩子函数拆分为两个部分
+                    // 我们用flag标识符来表示动画的切换
+                    // 刚开始  flag ---> true ----->false
+                }
+            }
+        })
+    </script>
+</body>
+</html>

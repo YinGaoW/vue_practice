@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>25组件中的data和methods</title>
+</head>
+<body>
+    <div id="app">
+        <login></login>
+        <mycom1></mycom1>
+    </div>
+    <div id="app2">
+    </div>
+    <template id="private">
+        <h1 style="color: red">私有组件</h1>
+    </template>
+    <script>
+        // 组件可以有自己的data数据
+        // 组件的data 和 Vue 实例的data不一样，实例中的可以为一个对象，但组件的必须为一个方法
+        // 组件的data 必须返回一个对象
+        // 组件中的data数据使用方式和实例中的data使用方式完全一样
+        Vue.component('mycom1',{
+            template:'<h1>这是全局组件h1---{{message}}</h1>',
+            // 组件的对象必须为function，且返回一个对象
+            data(){
+                return {
+                    message:"这是组件中data定义的数据"
+                }
+            }
+        })
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            components:{ // 定义实例内部私有组件
+                login:{
+                    template:"#private"
+                }
+            }
+        })
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{
+
+            },
+            components:{
+
+            }
+        })
+    </script>
+</body>
+</html>

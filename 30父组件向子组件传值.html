@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>父组件向子组件传值</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件可以在引用子组件的时候通过属性绑定的形式
+        把需要传递给子组件的数据以属性绑定的形式传递到子组件内部供子组件使用 
+        -->
+        <com1 :parentmsg="msg"></com1>
+    </div>
+    <template id="com1">
+        <div>
+            <h1 @click="change">这是子组件com1---{{parentmsg}}</h1>
+            <h1>{{title}}</h1>
+        </div>
+    </template>
+    <script>
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                msg:"hello vue.js"
+            },
+            methods:{
+
+            },
+            components:{
+                // 子组件中默认无法访问到父组件中的data和methods
+                com1:{
+                    // data 中的数据属于组件私有，可读可写，props中的数据只读
+                    data(){
+                        return {
+                            title:"组件私有数据"
+                        }
+                    },
+                    template:'#com1',
+                    // 组件中的props中的数据，都是通过父组件传过来的
+                    props:[
+                    'parentmsg'
+                    ],
+                    methods:{
+                        change(){
+                            //this.parentmsg="parentmsg被修改"
+                        }
+                    }
+                },
+                
+            }
+        })
+    </script>
+</body>
+</html>

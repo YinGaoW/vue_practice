@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>组件切换应用动画</title>
+    <style>
+    .v-enter,
+    .v-leave-to{
+        opacity: 0;
+        transform: translateX(150px)
+    }
+
+    .v-enter-active,
+    .v-leave-active{
+        transition: all 0.5s ease
+    }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Vue 提供了 <component>,来展示对应组件 -->
+            <!-- :is属性，指定要展示的组件名称 -->
+        <a href="" @click.prevent="loginFun('login')">登录</a>
+        <a href="" @click.prevent="registerFun('register')">注册</a>
+        <!-- 通过mode属性设置组件切换的模式 -->
+        <transition mode='out-in'>
+            <component :is="comName"></component>
+        </transition>
+    </div>
+    <template id="login-tmp">
+        <h1>登录组件</h1>
+    </template>
+    <template id="register-tmp">
+        <h1>注册组件</h1>
+    </template>
+    <script>
+        Vue.component('login',{
+            template:'#login-tmp',
+        })
+        Vue.component('register',{
+            template:'#register-tmp'
+        })
+
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                flag:true,
+                comName:'login'
+            },
+            methods:{
+                loginFun(tmpName){
+                    this.comName = tmpName;
+                },
+                registerFun(tmpName){
+                    this.comName = tmpName;
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>

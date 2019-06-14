@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="lib/Vue.js"></script>
+    <title>27组件切换v-if和v-else</title>
+</head>
+<body>
+    <div id="app">
+        <p style="color: red">组件切换方式1,结合v-if和v-else,但只适用于两个组件</p>
+        <a href="" @click.prevent="flag=true">登录</a>
+        <a href="" @click.prevent="flag=false">注册</a>
+        <login v-if='flag'></login>
+        <register v-else='flag'></register>
+        <hr>
+        <p style="color: green">组件切换方式2,使用Vue提供的component标签</p>
+        <!-- Vue 提供了 <component>,来展示对应组件 -->
+            <!-- :is属性，指定要展示的组件名称 -->
+        <a href="" @click.prevent="loginFun('login')">登录</a>
+        <a href="" @click.prevent="registerFun('register')">注册</a>
+        <component :is="comName"></component>
+    </div>
+    <template id="login-tmp">
+        <h1>登录组件</h1>
+    </template>
+    <template id="register-tmp">
+        <h1>注册组件</h1>
+    </template>
+    <script>
+        Vue.component('login',{
+            template:'#login-tmp',
+            data(){
+                return {
+                    
+                }
+            },
+            methods:{
+
+            }
+        })
+        Vue.component('register',{
+            template:'#register-tmp'
+        })
+
+        var vm = new Vue({
+            el:'#app', 
+            data:{
+                flag:true,
+                comName:'login'
+            },
+            methods:{
+                loginFun(tmpName){
+                    this.comName = tmpName;
+                },
+                registerFun(tmpName){
+                    this.comName = tmpName;
+                }
+            }
+        })
+        
+    </script>
+</body>
+</html>

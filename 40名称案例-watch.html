@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例 watch-</title>
+    <script src="./lib/Vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="firstName">+
+        <input type="text" v-model="lastName" >=
+        <input type="text" v-model="fulltName">
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstName:'',
+                lastName:'',
+                fulltName:''
+            },
+            methods:{
+                getFullName(){
+                    this.fulltName = this.firstName + ' ' + this.lastName
+                }
+            },
+            watch:{ // 使用这个属性可以监听data中的数据变化，然后触发watch中对应的处理函数
+                firstName:function(newVal,oldVal){
+                    // 传入的参数newVal为改变后的的值，oldValue为改变前的值
+                    this.fulltName = newVal + " " + this.lastName
+                },
+                // firstName:function(){
+                //     this.getFullName()
+                // },
+                // firstName(){
+                //     this.getFullName()
+                // },
+
+                lastName:function(newVal,oldVal){
+                    this.fulltName = this.firstName + " " + newVal
+                }
+                // lastName:function(){
+                //     this.getFullName()
+                // }
+                // lastName(){
+                //     this.getFullName()
+                // }
+            }
+        })
+    </script>
+</body>
+</html>

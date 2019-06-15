@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例 keyup-</title>
+    <script src="./lib/Vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="firstName" @keyup="getFullName">+
+        <input type="text" v-model="lastName" @keyup="getFullName">=
+        <input type="text" v-model="fulltName">
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstName:'',
+                lastName:'',
+                fulltName:''
+            },
+            methods:{
+                getFullName(){
+                    this.fulltName = this.firstName + '-' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

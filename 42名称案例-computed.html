@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>名称案例 </title>
+    <script src="./lib/Vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="firstName">+
+        <input type="text" v-model="lastName">=
+        <input type="text" v-model="fulltName">
+    </div>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                firstName:'',
+                lastName:'',
+            },
+            methods:{
+                getFullName(){
+                    this.fulltName = this.firstName + '-' + this.lastName
+                }
+            },
+            computed:{ // 在computed中可以定义一些属性（计算属性），本质是一个方法，不过使用的时候只是把它们的名称当属性使用
+                       // 并不会把计算属性当方法调用
+                // 计算属性引用的时候不加小括号，当属性使用即可
+                // 只要计算属性这个function内部所用到的任何data中的数据发生了变化就会立即重新计算这个 计算属性的值
+                // 计算属性的求值结果会被缓存起来，如果没有变化则不会重新求值而是从缓存中取
+                'fulltName':function(){
+                    return this.firstName+" "+this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>
